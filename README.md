@@ -33,6 +33,7 @@ Para rodar este projeto localmente, você precisará de dois terminais abertos: 
 ### Pré-requisitos
 * Node.js instalado.
 * Aplicativo **Expo Go** instalado no seu celular (Android ou iOS).
+* Android Studio no seu PC caso deseje rodas as aplicações em um único lugar. (Mais simples)
 
 ### Passo 1: Instalação
 Clone o repositório e instale as dependências:
@@ -50,8 +51,12 @@ npm install
 # abra um terminal para simular o backend
 npx json-server db.json --host 0.0.0.0 --port 3000
 
+# No Android Studio, inicie um dispositivo virtual
+
 # Em outro terminal, dentro da pasta datacar, rode o frontend
 npx expo start
+após o processo finalizar, pressione a tecla "A" para executar o app no dispositivo virtual
+
 
 Estrutura de Pastas
 datacar/
