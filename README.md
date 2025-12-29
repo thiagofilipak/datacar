@@ -1,50 +1,65 @@
-# Welcome to your Expo app 👋
+# DataCar - Gerenciador de Veículos
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**DataCar** é uma aplicação mobile desenvolvida em **React Native (Expo)** para o gerenciamento simples e eficiente de uma frota de veículos. O app permite cadastrar, visualizar, buscar, editar e excluir veículos (CRUD completo), com uma interface moderna e intuitiva.
 
-## Get started
+---
 
-1. Install dependencies
+## Funcionalidades
 
-   ```bash
-   npm install
-   ```
+* **Listagem de Veículos:** Visualização em lista com scroll e design em cards.
+* **Busca em Tempo Real:** Filtre veículos por modelo, marca ou placa instantaneamente.
+* **Cadastro:** Adicione novos carros informando Placa, Marca, Modelo, Ano e Cor.
+* **Edição Inteligente:** Ao clicar em um carro, o formulário já vem preenchido para edição.
+* **Exclusão Segura:** Botão de deletar com confirmação (alerta) para evitar acidentes.
+* **Feedback Visual:** Indicadores de carregamento (loading) e mensagens de sucesso/erro.
+* **Interface Responsiva:** Ajustes de *Safe Area* para evitar cortes em dispositivos com "notch" (recorte da câmera).
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+## Tecnologias Utilizadas
 
-In the output, you'll find options to open the app in a
+* **React Native** (Expo Framework)
+* **React Navigation** (Navegação por Abas/Tabs)
+* **Axios** (Integração com API REST)
+* **JSON Server** (Simulação de Backend)
+* **Hooks** (useState, useEffect, useIsFocused)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Como rodar o projeto
 
-## Get a fresh project
+Para rodar este projeto localmente, você precisará de dois terminais abertos: um para o **Backend** (API falsa) e outro para o **Frontend** (App).
 
-When you're ready, run:
+### Pré-requisitos
+* Node.js instalado.
+* Aplicativo **Expo Go** instalado no seu celular (Android ou iOS).
+
+### Passo 1: Instalação
+Clone o repositório e instale as dependências:
 
 ```bash
-npm run reset-project
-```
+# Clone este repositório
+git clone [https://github.com/thiagofilipak/datacar.git](https://github.com/thiagofilipak/datacar.git)
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+# Entre na pasta
+cd datacar
 
-## Learn more
+# Instale as dependências
+npm install
 
-To learn more about developing your project with Expo, look at the following resources:
+# abra um terminal para simular o backend
+npx json-server db.json --host 0.0.0.0 --port 3000
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+# Em outro terminal, dentro da pasta datacar, rode o frontend
+npx expo start
 
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Estrutura de Pastas
+datacar/
+├── src/
+│   ├── screens/      # Telas (Cadastro, Listagem)
+│   ├── services/     # Configuração da API (Axios)
+│   └── assets/       # Imagens e Ícones
+├── app/              # Configuração de Rotas (Expo Router)
+├── db.json           # Banco de dados simulado
+├── package.json      # Dependências do projeto
+└── README.md         # Documentação
