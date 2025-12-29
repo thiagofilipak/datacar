@@ -1,0 +1,28 @@
+{
+  "veiculos": [
+    {
+      "id": "1",
+      "placa": "ABC-1234",
+      "marca": "Toyota",
+      "modelo": "Corolla",
+      "ano": "2022",
+      "cor": "Prata"
+    },
+    {
+      "id": "2",
+      "placa": "XYZ-9876",
+      "marca": "Honda",
+      "modelo": "Civic",
+      "ano": "2021",
+      "cor": "Preto"
+    },
+    {
+      "placa": "NOV-4121",
+      "marca": "Fiat",
+      "modelo": "Toro",
+      "ano": "2021",
+      "cor": "Vermelho",
+      "id": "431f"
+    }
+  ]
+}

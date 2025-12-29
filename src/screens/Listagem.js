@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert, ActivityIndicator, StatusBar } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert, ActivityIndicator, StatusBar, TextInput } from 'react-native';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import api from '../services/api';
@@ -8,6 +8,7 @@ export default function Listagem() {
   const navigation = useNavigation();
   const [veiculos, setVeiculos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [busca, setBusca] = useState(''); 
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -51,11 +52,24 @@ export default function Listagem() {
     );
   };
 
+  const veiculosFiltrados = veiculos.filter(item => {
+    const termo = busca.toLowerCase();
+    return (
+      item.modelo.toLowerCase().includes(termo) ||
+      item.marca.toLowerCase().includes(termo) ||
+      item.placa.toLowerCase().includes(termo)
+    );
+  });
+
   const renderEmpty = () => (
     <View style={styles.emptyContainer}>
-      <Ionicons name="car-sport-outline" size={60} color="#ccc" />
-      <Text style={styles.emptyText}>Nenhum veículo encontrado.</Text>
-      <Text style={styles.emptySubText}>Cadastre seu primeiro carro!</Text>
+      <Ionicons name="search-outline" size={60} color="#ccc" />
+      <Text style={styles.emptyText}>
+        {busca ? "Nenhum veículo encontrado." : "Sua garagem está vazia."}
+      </Text>
+      <Text style={styles.emptySubText}>
+        {busca ? "Tente buscar por outro termo." : "Cadastre seu primeiro carro!"}
+      </Text>
     </View>
   );
 
@@ -65,6 +79,23 @@ export default function Listagem() {
       
       <Text style={styles.headerTitle}>Minha Garagem 🚗</Text>
 
+
+      <View style={styles.searchContainer}>
+        <Ionicons name="search" size={20} color="#888" style={{ marginRight: 10 }} />
+        <TextInput 
+          placeholder="Buscar por placa, modelo ou marca..."
+          placeholderTextColor="#888"
+          style={styles.searchInput}
+          value={busca}
+          onChangeText={setBusca}
+        />
+        {busca.length > 0 && (
+          <TouchableOpacity onPress={() => setBusca('')}>
+             <Ionicons name="close-circle" size={20} color="#ccc" />
+          </TouchableOpacity>
+        )}
+      </View>
+
       {loading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#007AFF" />
@@ -72,10 +103,11 @@ export default function Listagem() {
         </View>
       ) : (
         <FlatList
-          data={veiculos}
+          data={veiculosFiltrados} 
           keyExtractor={(item) => String(item.id)}
           contentContainerStyle={{ paddingBottom: 100 }}
           ListEmptyComponent={renderEmpty}
+          showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
             <View style={styles.card}>
               
@@ -106,7 +138,7 @@ export default function Listagem() {
       
        <TouchableOpacity 
           style={styles.fab}
-          onPress={() => navigation.navigate('cadastro')}
+          onPress={() => navigation.navigate('cadastro', { veiculoParaEditar: null })}
        >
          <Ionicons name="add" size={30} color="#FFF" />
        </TouchableOpacity>
@@ -118,14 +150,35 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f2f4f8',
-    padding: 20,
-    paddingTop: 80,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    paddingTop: 70, 
   },
   headerTitle: {
     fontSize: 28,
     fontWeight: '800',
     color: '#333',
+    marginBottom: 15,
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    backgroundColor: '#FFF',
+    borderRadius: 12,
+    paddingHorizontal: 15,
+    height: 50,
+    alignItems: 'center',
     marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 16,
+    color: '#333',
+    height: '100%',
   },
   loadingContainer: {
     flex: 1,
@@ -193,7 +246,7 @@ const styles = StyleSheet.create({
   },
   emptyContainer: {
     alignItems: 'center',
-    marginTop: 100,
+    marginTop: 80,
   },
   emptyText: {
     fontSize: 18,
